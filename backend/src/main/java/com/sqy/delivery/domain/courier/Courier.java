@@ -26,6 +26,7 @@ import java.util.Set;
 @Entity(name = "courier")
 @Table(name = "courier")
 public class Courier {
+
     @Column(name = "id", nullable = false, unique = true)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
