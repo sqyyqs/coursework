@@ -21,10 +21,13 @@ public class Address {
 
     @Schema(description = "улица")
     String street;
+
     @Schema(description = "номер дома")
     String houseNumber;
+
     @Schema(description = "индекс")
     String zipCode;
+
     @Schema(description = "город")
     String city;
 

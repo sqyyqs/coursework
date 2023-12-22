@@ -1,6 +1,7 @@
 package com.sqy.delivery.controller;
 
 import com.sqy.delivery.dto.user.UserCreateRequestDto;
+import com.sqy.delivery.dto.user.UserCredentialsDto;
 import com.sqy.delivery.dto.user.UserDto;
 import com.sqy.delivery.dto.user.UserSearchRequestDto;
 import com.sqy.delivery.service.UserService;
@@ -48,4 +49,10 @@ public class UserController {
         return userService.create(userCreateRequestDto);
     }
 
+    @PostMapping("/login")
+    @Operation(summary = "Вход по логину и паролю.")
+    public ResponseEntity<?> login(@RequestBody UserCredentialsDto userCredentialsDto) {
+        log.info("Invoke login({}).", userCredentialsDto);
+        return null;
+    }
 }

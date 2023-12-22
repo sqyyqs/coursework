@@ -79,6 +79,9 @@ public class UserServiceDatabase implements UserService {
         if (!matcher.matches()) {
             return ResponseEntity.badRequest().build();
         }
+        if (userRepository.existsByCredentials_Login(userCreateRequestDto.credentials().login())) {
+            return ResponseEntity.status(409).build();
+        }
         User saved = userRepository.save(UserMapper.fromCreateDto(userCreateRequestDto));
         return ResponseEntity.ok(UserMapper.toDto(saved));
     }

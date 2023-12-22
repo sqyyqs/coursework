@@ -7,12 +7,15 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.Objects;
 
-@Schema(description = "сущность для создания юзера")
+@Schema(description = "сущность для создания юзера/админа")
 public record UserCreateRequestDto(
-        @Schema(description = "сведения о юзере") ClientDetails userDetails
+        @Schema(description = "сведения о юзере/админе") ClientDetails userDetails,
+        @Schema(description = "логин/пароль") UserCredentialsDto credentials
 ) {
     @JsonCreator
-    public UserCreateRequestDto(@JsonProperty("userDetails") ClientDetails userDetails) {
+    public UserCreateRequestDto(@JsonProperty("userDetails") ClientDetails userDetails,
+                                @JsonProperty("credentials") UserCredentialsDto credentials) {
         this.userDetails = Objects.requireNonNull(userDetails, "Client details can't be null.");
+        this.credentials = Objects.requireNonNull(credentials, "User credentials can't be null.");
     }
 }
