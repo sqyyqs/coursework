@@ -1,5 +1,6 @@
 package com.sqy.delivery.controller;
 
+import com.sqy.delivery.dto.TokenWrapper;
 import com.sqy.delivery.dto.user.UserCreateRequestDto;
 import com.sqy.delivery.dto.user.UserCredentialsDto;
 import com.sqy.delivery.dto.user.UserDto;
@@ -36,14 +37,14 @@ public class UserController {
     }
 
     @DeleteMapping("/suspend/{id}")
-    @Operation(summary = "Удаление курьера из базы(ему проставляется isSuspended=true).")
+    @Operation(summary = "Удаление пользователя из базы(ему проставляется isSuspended=true).")
     public ResponseEntity<UserDto> suspend(@PathVariable("id") long id) {
         log.info("Invoke suspend({}).", id);
         return userService.suspendById(id);
     }
 
     @PostMapping("/create")
-    @Operation(summary = "Создание нового юзера.")
+    @Operation(summary = "Создание нового юзера(регистрация).")
     public ResponseEntity<UserDto> create(@RequestBody UserCreateRequestDto userCreateRequestDto) {
         log.info("Invoke create({}).", userCreateRequestDto);
         return userService.create(userCreateRequestDto);
@@ -51,8 +52,8 @@ public class UserController {
 
     @PostMapping("/login")
     @Operation(summary = "Вход по логину и паролю.")
-    public ResponseEntity<?> login(@RequestBody UserCredentialsDto userCredentialsDto) {
+    public ResponseEntity<TokenWrapper> login(@RequestBody UserCredentialsDto userCredentialsDto) {
         log.info("Invoke login({}).", userCredentialsDto);
-        return null;
+        return userService.authenticate(userCredentialsDto.login(), userCredentialsDto.password());
     }
 }

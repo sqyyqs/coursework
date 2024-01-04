@@ -1,5 +1,6 @@
 package com.sqy.delivery.service;
 
+import com.sqy.delivery.dto.TokenWrapper;
 import com.sqy.delivery.dto.user.UserCreateRequestDto;
 import com.sqy.delivery.dto.user.UserDto;
 import com.sqy.delivery.dto.user.UserSearchRequestDto;
@@ -14,4 +15,6 @@ public interface UserService {
     ResponseEntity<UserDto> suspendById(long id);
 
     ResponseEntity<UserDto> create(UserCreateRequestDto userCreateRequestDto);
+
+    ResponseEntity<TokenWrapper> authenticate(String login, String password);
 }

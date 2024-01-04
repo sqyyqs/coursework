@@ -23,8 +23,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
-import java.time.LocalDateTime;
-
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Data
@@ -64,9 +62,6 @@ public class Package {
     @JoinColumn(name = "courier_id", nullable = true)
     Courier courier;
 
-    @Transient
-    LocalDateTime expectedDeliveryTime;
-
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Package{");
@@ -78,7 +73,6 @@ public class Package {
         sb.append(", toAddress=").append(toAddress);
         sb.append(", to=").append(to);
         sb.append(", courier=").append(courier);
-        sb.append(", expectedDeliveryTime=").append(expectedDeliveryTime);
         sb.append('}');
         return sb.toString();
     }
