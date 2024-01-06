@@ -9,7 +9,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.annotation.Nullable;
 import lombok.Builder;
 
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Builder
@@ -21,15 +20,15 @@ public record PackageDto(
         @Schema(description = "откуда(сейчас игнорируется)") Address fromAddress,
         @Schema(description = "от кого") UserDto from,
         @Schema(description = "куда(сейчас игнорируется)") Address toAddress,
-        @Schema(description = "кому (сейчас игнорируется)") UserDto to,
-        @Nullable @Schema(description = "курьер") CourierDto courier,
-        @Schema(description = "ожидаемое время доставки(сейчас не работает)") LocalDateTime expectedDeliveryTime
+        @Schema(description = "кому") UserDto to,
+        @Nullable @Schema(description = "курьер") CourierDto courier
 ) {
 
-    public PackageDto(long id, PackageStatus packageStatus, PackageDetails packageDetails,
+    public PackageDto(long id, PackageStatus packageStatus,
+                      PackageDetails packageDetails,
                       Address fromAddress, UserDto from,
                       Address toAddress, UserDto to,
-                      @Nullable CourierDto courier, LocalDateTime expectedDeliveryTime) {
+                      @Nullable CourierDto courier) {
         this.id = id;
         this.packageStatus = Objects.requireNonNull(packageStatus, "Package status can't be null.");
         this.packageDetails = Objects.requireNonNull(packageDetails, "Package details can't be null,");
@@ -38,6 +37,5 @@ public record PackageDto(
         this.toAddress = Objects.requireNonNull(toAddress, "To address can't be null.");
         this.to = Objects.requireNonNull(to, "To user can't be null.");
         this.courier = courier;
-        this.expectedDeliveryTime = Objects.requireNonNull(expectedDeliveryTime, "Expected delivery time can't be null.");
     }
 }
