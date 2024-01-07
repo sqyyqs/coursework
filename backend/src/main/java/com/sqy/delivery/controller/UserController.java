@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,6 +31,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/search")
+    @CrossOrigin("*")
     @Operation(summary = "Поиск с пагинацией")
     public ResponseEntity<PagingResponse<UserDto>> search(@RequestBody PagingRequest<UserSearchRequestDto> userSearchRequestDto) {
         log.info("Invoke search({}).", userSearchRequestDto);
@@ -37,6 +39,7 @@ public class UserController {
     }
 
     @DeleteMapping("/suspend/{id}")
+    @CrossOrigin("*")
     @Operation(summary = "Удаление пользователя из базы(ему проставляется isSuspended=true).")
     public ResponseEntity<UserDto> suspend(@PathVariable("id") long id) {
         log.info("Invoke suspend({}).", id);
@@ -44,6 +47,7 @@ public class UserController {
     }
 
     @PostMapping("/create")
+    @CrossOrigin("*")
     @Operation(summary = "Создание нового юзера(регистрация).")
     public ResponseEntity<UserDto> create(@RequestBody UserCreateRequestDto userCreateRequestDto) {
         log.info("Invoke create({}).", userCreateRequestDto);
@@ -51,6 +55,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
+    @CrossOrigin("*")
     @Operation(summary = "Вход по логину и паролю.")
     public ResponseEntity<TokenWrapper> login(@RequestBody UserCredentialsDto userCredentialsDto) {
         log.info("Invoke login({}).", userCredentialsDto);

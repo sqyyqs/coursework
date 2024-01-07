@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,6 +30,7 @@ public class PackageController {
     private final PackageService packageService;
 
     @PostMapping("/create")
+    @CrossOrigin("*")
     @Operation(summary = "Создание посылки(адрес сейчас никуда не сохраняется но нужно проставить хотя бы одно поле).")
     public ResponseEntity<PackageDto> create(@RequestBody CreatePackageRequestDto createPackageRequestDto) {
         log.info("Invoke create({}).", createPackageRequestDto);
@@ -36,6 +38,7 @@ public class PackageController {
     }
 
     @PostMapping("/search")
+    @CrossOrigin("*")
     @Operation(summary = "Поиск с пагинацией.")
     public ResponseEntity<PagingResponse<PackageDto>> search(@RequestBody PagingRequest<PackageSearchRequestDto> createPackageRequestDto) {
         log.info("Invoke search({}).", createPackageRequestDto);
@@ -43,6 +46,7 @@ public class PackageController {
     }
 
     @PutMapping("/courierAppointment")
+    @CrossOrigin("*")
     @Operation(summary = "Назначить курьера на посылку(меняет статус на COURIER_APPOINTED), нужно отдельно поменять статус курьеру.")
     public ResponseEntity<PackageDto> appointCourier(@RequestBody PackageAppointCourierRequestDto packageAppointCourierRequestDto) {
         log.info("Invoke appointCourier({}).", packageAppointCourierRequestDto);
@@ -50,6 +54,7 @@ public class PackageController {
     }
 
     @PutMapping("/updateStatus")
+    @CrossOrigin("*")
     @Operation(summary = "Обновить статус посылки(кроме UNDER_MODERATOR_CONSIDERATION и COURIER_APPOINTED)")
     public ResponseEntity<PackageDto> updateStatus(@RequestBody PackageUpdateStatusRequestDto packageAppointCourierRequestDto) {
         log.info("Invoke updateStatus({}).", packageAppointCourierRequestDto);

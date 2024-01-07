@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,6 +31,7 @@ public class CourierController {
     private final CourierService courierService;
 
     @PostMapping("/search")
+    @CrossOrigin("*")
     @Operation(summary = "Поиск с пагинацией.")
     public ResponseEntity<PagingResponse<CourierDto>> search(@RequestBody PagingRequest<CourierSearchRequestDto> courierSearchRequestDto) {
         log.info("Invoke search({}).", courierSearchRequestDto);
@@ -37,6 +39,7 @@ public class CourierController {
     }
 
     @PostMapping("/create")
+    @CrossOrigin("*")
     @Operation(summary = "Создание нового курьера(статус будет ON_MODERATING).")
     public ResponseEntity<CourierDto> create(@RequestBody CreateCourierRequestDto courierCreateDto) {
         log.info("Invoke create({}).", courierCreateDto);
@@ -44,6 +47,7 @@ public class CourierController {
     }
 
     @DeleteMapping("/suspend/{id}")
+    @CrossOrigin("*")
     @Operation(summary = "Удаление курьера из базы(ему проставляется status=SUSPENDED).")
     public ResponseEntity<CourierDto> suspend(@PathVariable("id") long id) {
         log.info("Invoke suspend({}).", id);
@@ -51,6 +55,7 @@ public class CourierController {
     }
 
     @PutMapping("/updateStatus")
+    @CrossOrigin("*")
     @Operation(summary = "Обновление статуса, не работает с newStatus = ON_MODERATING и SUSPENDED, использовать другие эндпоинты для этого.")
     public ResponseEntity<CourierDto> updateStatus(@RequestBody CourierUpdateStatusRequestDto courierUpdateStatusRequestDto) {
         log.info("Invoke updateStatus({}).", courierUpdateStatusRequestDto);
