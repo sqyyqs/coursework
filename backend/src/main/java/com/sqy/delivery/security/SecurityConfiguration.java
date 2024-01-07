@@ -43,9 +43,9 @@ public class SecurityConfiguration {
                         .requestMatchers(
                                 "/api/package/create").hasAuthority("USER")
                         .requestMatchers(
+                                "/api/user/search",
                                 "/api/package/search").hasAnyAuthority("USER", "ADMIN")
                         .requestMatchers(
-                                "/api/user/search",
                                 "/api/user/suspend/**",
                                 "/api/package/courierAppointment",
                                 "/api/package/updateStatus").hasAuthority("ADMIN")
@@ -67,6 +67,7 @@ public class SecurityConfiguration {
                 .passwordEncoder(passwordEncoder());
         return builder.build();
     }
+
     @Bean
     @Primary
     public AuthenticationManager authenticationManagerUser(HttpSecurity http, UserAuthService userAuthService) throws Exception {
