@@ -21,6 +21,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Slf4j
@@ -72,4 +73,18 @@ public class AdministratorServiceDatabase implements AdministratorService {
         Administrator saved = administratorRepository.save(adminEntityToSave);
         return ResponseEntity.ok(AdministratorMapper.toDto(saved));
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public ResponseEntity<AdministratorDto> findByUsername(String username) {
+        log.info("Invoke findByUsername({}).", username);
+        if (username.startsWith("\"") && username.endsWith("\"")) {
+            username = username.substring(1, username.length() - 1);
+        }
+        return administratorRepository.findByCredentials_Login(username)
+                .map(AdministratorMapper::toDto)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.badRequest().build());
+    }
+
 }

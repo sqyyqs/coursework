@@ -11,4 +11,6 @@ public interface AdministratorService {
     ResponseEntity<TokenWrapper> login(UserCredentialsDto userCredentialsDto);
 
     ResponseEntity<AdministratorDto> create(UserCreateRequestDto userCreateRequestDto);
+
+    ResponseEntity<AdministratorDto> findByUsername(String username);
 }

@@ -1,5 +1,6 @@
-package com.sqy.delivery.security;
+package com.sqy.delivery.configuration;
 
+import com.sqy.delivery.security.JwtAuthenticationFilter;
 import com.sqy.delivery.service.impl.auth.AdministratorAuthService;
 import com.sqy.delivery.service.impl.auth.UserAuthService;
 import lombok.RequiredArgsConstructor;
@@ -49,7 +50,8 @@ public class SecurityConfiguration {
                         .requestMatchers(
                                 "/api/user/suspend/**",
                                 "/api/package/courierAppointment",
-                                "/api/package/updateStatus").hasAuthority("ADMIN")
+                                "/api/package/updateStatus",
+                                "/api/administrator/getCurrent").hasAuthority("ADMIN")
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .build();

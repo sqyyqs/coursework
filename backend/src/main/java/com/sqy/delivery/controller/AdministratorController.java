@@ -4,13 +4,16 @@ import com.sqy.delivery.dto.AdministratorDto;
 import com.sqy.delivery.dto.TokenWrapper;
 import com.sqy.delivery.dto.user.UserCreateRequestDto;
 import com.sqy.delivery.dto.user.UserCredentialsDto;
+import com.sqy.delivery.security.UserPrinciple;
 import com.sqy.delivery.service.AdministratorService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,5 +42,14 @@ public class AdministratorController {
     public ResponseEntity<TokenWrapper> login(@RequestBody UserCredentialsDto userCredentialsDto) {
         log.info("Invoke login({}).", userCredentialsDto);
         return administratorService.login(userCredentialsDto);
+    }
+
+    @GetMapping("/getCurrent")
+    @CrossOrigin("*")
+    @Operation(summary = "Получение информации об админе из токена.")
+    public ResponseEntity<AdministratorDto> getCurrentAdmin() {
+        log.info("Invoke getCurrentAdmin()");
+        String username = ((UserPrinciple) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+        return administratorService.findByUsername(username);
     }
 }
