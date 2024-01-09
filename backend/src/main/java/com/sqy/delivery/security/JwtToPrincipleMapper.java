@@ -10,6 +10,7 @@ import java.util.List;
 
 @Component
 public class JwtToPrincipleMapper {
+
     public UserPrinciple convert(DecodedJWT jwt) {
         return new UserPrinciple(
                 Long.parseLong(jwt.getSubject()),

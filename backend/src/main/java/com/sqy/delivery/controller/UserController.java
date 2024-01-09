@@ -5,6 +5,7 @@ import com.sqy.delivery.dto.user.UserCreateRequestDto;
 import com.sqy.delivery.dto.user.UserCredentialsDto;
 import com.sqy.delivery.dto.user.UserDto;
 import com.sqy.delivery.dto.user.UserSearchRequestDto;
+import com.sqy.delivery.security.UserPrinciple;
 import com.sqy.delivery.service.UserService;
 import com.sqy.delivery.util.PagingRequest;
 import com.sqy.delivery.util.PagingResponse;
@@ -13,8 +14,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -60,5 +63,15 @@ public class UserController {
     public ResponseEntity<TokenWrapper> login(@RequestBody UserCredentialsDto userCredentialsDto) {
         log.info("Invoke login({}).", userCredentialsDto);
         return userService.authenticate(userCredentialsDto.login(), userCredentialsDto.password());
+    }
+
+
+    @GetMapping("/getCurrent")
+    @CrossOrigin("*")
+    @Operation(summary = "Получение юзера из токена.")
+    public ResponseEntity<UserDto> getCurrentUser() {
+        log.info("Invoke getCurrentUser()");
+        String username = ((UserPrinciple) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+        return userService.findByUsername(username);
     }
 }

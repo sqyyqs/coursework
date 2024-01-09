@@ -139,4 +139,19 @@ public class UserServiceDatabase implements UserService {
 
         return ResponseEntity.ok(new TokenWrapper(token));
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public ResponseEntity<UserDto> findByUsername(String username) {
+        log.info("Invoke findByUsername({})", username);
+        if (username.startsWith("\"") && username.endsWith("\"")) {
+            username = username.substring(1, username.length() - 1);
+        }
+        return userRepository.findByCredentials_Login(username)
+                .map(UserMapper::toDto)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.badRequest().build());
+    }
 }
+
+

@@ -17,4 +17,6 @@ public interface UserService {
     ResponseEntity<UserDto> create(UserCreateRequestDto userCreateRequestDto);
 
     ResponseEntity<TokenWrapper> authenticate(String login, String password);
+
+    ResponseEntity<UserDto> findByUsername(String username);
 }

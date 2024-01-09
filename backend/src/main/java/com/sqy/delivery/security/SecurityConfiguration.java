@@ -41,7 +41,8 @@ public class SecurityConfiguration {
                                 "/v3/api-docs/**",
                                 "/swagger-ui/**").permitAll()
                         .requestMatchers(
-                                "/api/package/create").hasAuthority("USER")
+                                "/api/package/create",
+                                "/api/user/getCurrent").hasAuthority("USER")
                         .requestMatchers(
                                 "/api/user/search",
                                 "/api/package/search").hasAnyAuthority("USER", "ADMIN")
