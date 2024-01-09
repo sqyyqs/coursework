@@ -19,7 +19,8 @@ public class AdministratorAuthService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return administratorRepository.findByCredentials_Login(username).map(administrator -> UserPrinciple.builder()
+        return administratorRepository.findByCredentials_Login(username)
+                .map(administrator -> UserPrinciple.builder()
                         .login(administrator.getCredentials().getLogin())
                         .entityId(administrator.getId())
                         .password(administrator.getCredentials().getPassword())

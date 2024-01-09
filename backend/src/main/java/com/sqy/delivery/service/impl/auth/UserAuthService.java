@@ -22,6 +22,7 @@ public class UserAuthService implements UserDetailsService {
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByCredentials_Login(username)
+                .filter(user -> !user.isSuspended())
                 .map(user -> UserPrinciple.builder()
                         .login(user.getCredentials().getLogin())
                         .password(user.getCredentials().getPassword())
